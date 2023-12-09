@@ -119,9 +119,6 @@ const getArtistTopTracks = async () => {
     }
   );
   const tracks = (await response.json())["tracks"] as Track[];
-  console.log({
-    tracks,
-  });
   return tracks;
 };
 
