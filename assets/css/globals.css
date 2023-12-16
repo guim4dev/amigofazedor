@@ -1,0 +1,15 @@
+:root {
+  --color-background: #0F172A;
+  --color-text-primary: #E5E5E5;
+  --color-primary: #22D3EE;
+  --color-primary-dark: #0e7f90;
+}
+
+html, body, #app, #root, #__nuxt {  
+  width: 100%;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}

@@ -1,7 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxt/ui"],
+  modules: ["@nuxt/image"],
+  css: ["~/assets/css/globals.css"],
   routeRules: {
     // prerender index route by default
     "/": { prerender: true },
