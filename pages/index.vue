@@ -7,6 +7,7 @@
       @song-click="handleSongClick"
       :is-selected="isSongSelected(song.uniqueId)"
       :matched="isSongAlreadyMatched(song.id)"
+      :just-matched="justMatched === song.uniqueId"
     />
   </div>
 </template>
@@ -18,6 +19,7 @@ export type SongWithUniqueId = Song & { uniqueId: Number };
 
 const selectedSongs = ref<{ songId: Number; uniqueId: Number }[]>([]);
 const pairsMade = ref<Number[]>([]);
+const justMatched = ref<Number | null>(null);
 
 console.log("songs", songs.value);
 
@@ -72,25 +74,36 @@ const handleSongClick = (songId: Number, songUniqueId: Number) => {
   }
 
   // selected 2 songs and its not clicking in a already selected song
-  if (
-    selectedSongs.value.find(
-      ({ songId: currentSongId, uniqueId }) =>
-        currentSongId === songId && uniqueId !== songUniqueId
-    )
-  ) {
+  const posibleMatch = selectedSongs.value.find(
+    ({ songId: currentSongId, uniqueId }) =>
+      currentSongId === songId && uniqueId !== songUniqueId
+  );
+  if (posibleMatch) {
     // songs matched
     addOrRemoveSong(songId, songUniqueId);
-    pairsMade.value.push(songId);
+    justMatched.value = posibleMatch.uniqueId;
+    setTimeout(() => {
+      justMatched.value = null;
+    }, 5000);
     selectedSongs.value = [];
+    pairsMade.value.push(songId);
     return;
   }
 
   if (!alreadyMatched) {
     addOrRemoveSong(songId, songUniqueId);
     if (selectedSongs.value.length === 2) {
+      const selectedUniqueIds = selectedSongs.value.map(
+        ({ uniqueId }) => uniqueId
+      );
       setTimeout(() => {
-        selectedSongs.value = [];
-      }, 5000);
+        if (
+          selectedSongs.value.length === 2 &&
+          selectedUniqueIds.every((uniqueId) => isSongSelected(uniqueId))
+        ) {
+          selectedSongs.value = [];
+        }
+      }, 10000);
     }
     // not already matched
     return;
