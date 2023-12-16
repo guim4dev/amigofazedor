@@ -109,7 +109,7 @@ onMounted(() => {
 
 .base-card {
   background-color: transparent;
-  width: 200px;
+  width: 100%;
   aspect-ratio: 1;
   perspective: 1000px;
   box-sizing: border-box;
