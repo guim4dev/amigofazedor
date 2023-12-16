@@ -4,7 +4,7 @@
     @click="handleClick"
     :class="{
       'base-card': true,
-      'open-card': (isSelected || justMatched) && !matched,
+      'open-card': (isSelected || justMatched) || matched,
       'matched-card': matched,
       'close-card': !matched && !(isSelected || justMatched),
     }"
@@ -12,9 +12,7 @@
     <div class="card-inner">
       <!-- Parte da trás -->
       <div class="card-back">
-        <span class="debug" v-if="debug"
-          >{{ song.id }}#{{ song.uniqueId }}</span
-        >
+        <span class="debug" v-if="debug">{{ song.id }}#{{ song.uniqueId }}</span>
         <figure class="card-back-inner">
           <NuxtImg src="/images/disco-de-vinil.png" class="disc" />
         </figure>
@@ -89,7 +87,7 @@ onMounted(() => {
   background-color: transparent;
   width: 200px;
   aspect-ratio: 1;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  perspective: 1000px;
   box-sizing: border-box;
 }
 
@@ -105,6 +103,11 @@ onMounted(() => {
 
 .open-card .card-inner {
   transform: rotateY(180deg);
+}
+
+.base-card.matched-card {
+  filter: drop-shadow(0 0 0.5rem var(--color-primary-dark));
+  animation: float 2s ease-in-out infinite;
 }
 
 .card-back {
@@ -129,7 +132,8 @@ onMounted(() => {
   position: absolute;
   width: 100%;
   height: 100%;
-  -webkit-backface-visibility: hidden; /* Safari */
+  -webkit-backface-visibility: hidden;
+  /* Safari */
   backface-visibility: hidden;
   border-radius: 16px;
   border: 1px solid white;
@@ -150,7 +154,13 @@ onMounted(() => {
   aspect-ratio: auto;
 }
 
-/* audio::-webkit-media-controls-mute-button {
-  display: none;
-} */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(5px);
+  }
+}
 </style>
