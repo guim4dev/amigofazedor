@@ -15,4 +15,5 @@ export default defineNuxtConfig({
       apiUrl: "https://api.spotify.com",
     },
   },
+  ssr: false,
 });

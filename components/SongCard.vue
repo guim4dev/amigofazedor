@@ -4,7 +4,7 @@
     @click="handleClick"
     :class="{
       'base-card': true,
-      'open-card': (isSelected || justMatched) || matched,
+      'open-card': isSelected || justMatched || matched,
       'matched-card': matched,
       'close-card': !matched && !(isSelected || justMatched),
     }"
@@ -12,22 +12,36 @@
     <div class="card-inner">
       <!-- Parte da trás -->
       <div class="card-back">
-        <span class="debug" v-if="debug">{{ song.id }}#{{ song.uniqueId }}</span>
-        <figure class="card-back-inner">
+        <span class="debug" v-if="debug">
+          {{ song.id }}#{{ song.uniqueId }}
+        </span>
+        <figure v-show="!matched" class="card-back-inner">
           <NuxtImg src="/images/disco-de-vinil.png" class="disc" />
         </figure>
       </div>
 
       <!-- Parte da frente -->
       <div class="card-front">
-        <span class="debug" v-if="debug"
-          >{{ song.id }}#{{ song.uniqueId }}</span
-        >
-        <audio ref="audio" preload loop controls>
+        <span class="debug" v-if="debug">
+          {{ song.id }}#{{ song.uniqueId }}
+        </span>
+        <audio ref="audio" preload loop controls :hidden="matched">
           <source :src="song.previewUrl" type="audio/mp3" />
         </audio>
+        <NuxtImg v-show="matched" :src="song.imageUrl" class="song-image" />
       </div>
     </div>
+    <h1
+      style="
+        display: inline-block;
+        height: 1rem;
+        font-size: 1rem;
+        transition: opacity 0.8s;
+      "
+      :class="{ hidden: !matched }"
+    >
+      {{ song.title }}
+    </h1>
   </article>
 </template>
 
@@ -73,6 +87,16 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.hidden {
+  opacity: 0;
+}
+
+.song-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
 .debug {
   position: absolute;
   top: 0;
