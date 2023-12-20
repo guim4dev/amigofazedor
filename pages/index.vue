@@ -12,13 +12,8 @@
   </div>
   <transition name="fade">
     <div v-if="won" class="won">
-      <NuxtImg
-        src="/images/ivanCantas.jpg"
-        width="640"
-        height="640"
-        class="the-man"
-      />
-      <h1>{{ randomCoolPhrase }}</h1>
+      <NuxtImg src="/images/ivanCantas.jpg" class="the-man" />
+      <h2>{{ randomCoolPhrase }}</h2>
       <div
         style="
           display: flex;
@@ -65,11 +60,8 @@ const reset = () => {
 const coolPhrases = [
   "Você é praticamente um mestre jedi da música de Ivan Seidel!",
   "🧑‍🎓 Você treinou antes? Ivan Seidel ficaria orgulhoso!",
-  "Você é um verdadeiro fã de Ivan Seidel!",
   "♻️ Você é o Ivan Seidel da música de Ivan Seidel!",
   "🤔 Você é o Ivan Seidel ?",
-  "🧠 Você sabe tudo sobre Ivan Seidel!",
-  "O melhor fã de Ivan Seidel que eu já vi!",
   "👂 Você só ouve Ivan Seidel?",
   "🎹 Beethoven, Mozart, Ivan Seidel, qual a diferença?",
 ];
@@ -216,7 +208,7 @@ const handleSongClick = (songId: Number, songUniqueId: Number) => {
   justify-content: center;
   gap: 1rem;
   padding: 2rem;
-  width: 100%;
+  width: 100dvw;
   height: 100%;
   box-sizing: border-box;
   background: rgba(0, 0, 0, 0.7);
@@ -224,6 +216,8 @@ const handleSongClick = (songId: Number, songUniqueId: Number) => {
 
 .the-man {
   border-radius: 50%;
+  width: 200px;
+  aspect-ratio: 1;
   border: 5px solid var(--color-ivan-purple);
 }
 
